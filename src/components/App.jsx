@@ -5,6 +5,8 @@ import Logo from './logo.png';
 
 
 
+
+
 class App extends Component {
 
     constructor(props) {
@@ -21,13 +23,26 @@ class App extends Component {
         fetch('https://ghibliapi.herokuapp.com/films')
             .then(res => res.json())
             .then(films => {
-                this.setState({ films })
+                let film = films.map(films => {
+                    return (
+                        <Card key={films.id}
+
+                        />
+                    )
+                })
+                this.setState({ film })
             })
 
         fetch('https://ghibliapi.herokuapp.com/people')
             .then(peop => peop.json())
             .then(people => {
-                this.setState({ people })
+                let peops = people.map(people => {
+                    return (
+                        <People key={people.id}
+                        />
+                    )
+                })
+                this.setState({ peops })
             })
     }
 
@@ -48,19 +63,18 @@ class App extends Component {
     render() {
         if (this.state.loadFilms === false && this.state.loadPeople === false) {
             return (
-<>
-                <div className="row p-5">
-                    <img src={Logo} alt="" />
-                </div>
-                <div className="row p-3">
-                
-                    <button className="btn btn-outline-info" onClick={(e => this.handleFilms(e))}>Load Films</button>
-                </div>
-                <div className="row p-3">
-                    <button className="btn btn-outline-info" onClick={(e => this.handlePeople(e))}>Load People</button>
-                </div>
+                <>
+                    <div className="row p-5">
+                        <img src={Logo} alt="" />
+                    </div>
+                    <div className="row p-3">
+                        <button className="btn btn-outline-info" onClick={(e => this.handleFilms(e))}>Load Films</button>
+                    </div>
+                    <div className="row p-3">
+                        <button className="btn btn-outline-info" onClick={(e => this.handlePeople(e))}>Load People</button>
+                    </div>
                 </>
-        )
+            )
         }
 
     }
